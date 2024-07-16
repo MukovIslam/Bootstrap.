@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <div>
+            <span class="navbar-text h3 text-white" th:text="${idPeople.getEmail()}">VALUE</span>
+            <span class="font-weight-normal text-white h4"> with roles: </span>
+
+            <p class="navbar-brand mb-0 h1" th:each="role : ${idPeople.getRoles()}">
+                <span class="navbar-brand mb-0 h1 font-weight-normal" th:text="${role.getName()}">VALUE</span>
+            </p>
+        </div>
+        <a class="nav-link text-muted" href="/logout">Logout</a>
+    </div>
+</nav>
+<div class="container-fluid bg-light">
+    <div class="row">
+        <ul class="list-group col-md-3 py-3 bg-white">
+            <li class="list-group-item current" th:each="role : ${currentUser.getRoles()}" th:if="${role.getName() == 'ADMIN'}">
+                <a th:href="@{/admin}" th:text="ADMIN">VALUE</a>
+            </li>
+            <li class="list-group-item active " ><a th:href="@{/user/{id}(id = ${currentUser.getId()})}" th:text="USER">VALUE</a></li>
+        </ul>
+        <style>
+            .list-group-item.active a {
+                color: white; /* Цвет текста ссылки в активном элементе списка */
+            }
+        </style>
+
+        <div class="col-md-9 bg-light py-3 ">
+            <h2>User information-page</h2>
+            <div class="card">
+                <div class="card-header">
+                    About user
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Age</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td th:text="${idPeople.getId()}">VALUE</td>
+                                <td th:text="${idPeople.getUsername()}">VALUE</td>
+                                <td th:text="${idPeople.getLastName()}">VALUE</td>
+                                <td th:text="${idPeople.getAge()}">VALUE</td>
+                                <td th:text="${idPeople.getEmail()}">VALUE</td>
+                                <td th:each="role : ${idPeople.getRoles()}">
+                                    <span th:text="${role.getName()}">VALUE</span>
+                                <td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
